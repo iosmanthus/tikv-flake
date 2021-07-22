@@ -23,7 +23,7 @@
                 shellHook = ''
                   if [ ! -d "tikv" ]; then
                     git clone ${fork}
-                    git -C tikv remote add upstream ${upstream}
+                    git remote add upstream ${upstream}
                   fi
                 '';
               };
