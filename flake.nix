@@ -11,13 +11,21 @@
         system:
           let
             pkgs = nixpkgs.legacyPackages.${system};
+            fork = "git@github.com:iosmanthus/tikv.git";
+            upstream = "git@github.com:tikv/tikv.git";
           in
             {
               devShell = pkgs.mkShell {
                 hardeningDisable = [ "all" ];
                 nativeBuildInputs = with pkgs;[ cmake ];
-                buildInputs = with pkgs;[ git gnumake rustup protobuf3_8 perl ];
+                buildInputs = with pkgs;[ zsh git gnumake rustup protobuf3_8 perl ];
                 PROTOC = "${pkgs.protobuf3_8}/bin/protoc";
+                shellHook = ''
+                  if [ ! -d "tikv" ]; then
+                    git clone ${fork}
+                    git -C tikv remote add upstream ${upstream}
+                  fi
+                '';
               };
             }
       );

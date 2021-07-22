@@ -1,4 +1,0 @@
-[submodule "tikv"]
-	path = tikv
-	branch = master
-	url = git@github.com:iosmanthus/tikv.git
