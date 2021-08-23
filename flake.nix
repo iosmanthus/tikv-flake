@@ -18,7 +18,7 @@
               devShell = pkgs.mkShell {
                 hardeningDisable = [ "all" ];
                 nativeBuildInputs = with pkgs;[ cmake ];
-                buildInputs = with pkgs;[ zsh git gnumake rustup protobuf3_8 perl ];
+                buildInputs = with pkgs;[ zsh git gnumake rustup protobuf3_8 perl zlib ];
                 PROTOC = "${pkgs.protobuf3_8}/bin/protoc";
                 shellHook = ''
                   if [ ! -d "tikv" ]; then
