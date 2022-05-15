@@ -1,7 +1,7 @@
 {
   description = "Distributed transactional key-value database, originally created to complement TiDB";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
