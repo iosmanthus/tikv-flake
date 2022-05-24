@@ -1,2 +1,3 @@
-tikv
+/tikv
+/tikv-client-rust
 .direnv
