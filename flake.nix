@@ -9,24 +9,26 @@
     flake-utils.lib.eachDefaultSystem
       (
         system:
-          let
-            pkgs = nixpkgs.legacyPackages.${system};
-            fork = "git@github.com:iosmanthus/tikv.git";
-            upstream = "git@github.com:tikv/tikv.git";
-          in
-            {
-              devShell = pkgs.mkShell {
-                hardeningDisable = [ "all" ];
-                nativeBuildInputs = with pkgs;[ cmake ];
-                buildInputs = with pkgs;[ zsh git gnumake rustup protobuf3_8 perl zlib ];
-                PROTOC = "${pkgs.protobuf3_8}/bin/protoc";
-                shellHook = ''
-                  if [ ! -d "tikv" ]; then
-                    git clone ${fork}
-                    git remote add upstream ${upstream}
-                  fi
-                '';
-              };
-            }
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+          python = pkgs.python3;
+          python-env = python.withPackages (p: with p; [
+            redis
+          ]);
+        in
+        {
+          devShell = pkgs.mkShell {
+            hardeningDisable = [ "all" ];
+            nativeBuildInputs = with pkgs;[ cmake pkg-config ];
+            buildInputs = with pkgs;[ python-env gcc zsh git gnumake rustup protobuf3_8 perl zlib openssl mold ];
+            PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+            PROTOC = "${pkgs.protobuf3_8}/bin/protoc";
+            shellHook = ''
+              PYTHONPATH=${python-env}/${python-env.sitePackages}
+            '';
+          };
+        }
       );
 }
