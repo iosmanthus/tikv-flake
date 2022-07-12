@@ -1,9 +1,2 @@
-/tikv
-/tikv-client-rust
-/grpc-rs
-/raft-rs
-/rust-demo
-/tikv
-/tikv-client-rust
-/tikv-service
-.direnv
+*
+!flake*
